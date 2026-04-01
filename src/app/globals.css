@@ -45,3 +45,16 @@ body {
 .font-display {
   font-family: var(--font-saira-condensed), system-ui, sans-serif;
 }
+
+@supports (-webkit-touch-callout: none) {
+  .backdrop-blur,
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl,
+  .backdrop-blur-2xl,
+  .backdrop-blur-3xl {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
