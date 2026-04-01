@@ -51,8 +51,10 @@ export function CalendarBoard() {
   const [events, setEvents] = React.useState<CalendarEvent[]>([]);
   const [syncing, setSyncing] = React.useState(false);
   const [editingId, setEditingId] = React.useState<string | null>(null);
+  const isNotificationSupported =
+    typeof window !== 'undefined' && typeof Notification !== 'undefined';
   const [permission, setPermission] = React.useState<NotificationPermission>(
-    typeof window !== 'undefined' ? Notification.permission : 'default'
+    isNotificationSupported ? Notification.permission : 'default'
   );
   const [form, setForm] = React.useState({
     title: '',
@@ -183,6 +185,7 @@ export function CalendarBoard() {
   const urgentAlerts = upcoming.filter((item) => daysUntil(item.date) <= 3);
 
   React.useEffect(() => {
+    if (!isNotificationSupported) return;
     if (permission !== 'granted') return;
     upcoming.forEach((item) => {
       const daysLeft = daysUntil(item.date);
@@ -201,7 +204,7 @@ export function CalendarBoard() {
   }, [permission, upcoming]);
 
   const requestPermission = async () => {
-    if (typeof window === 'undefined') return;
+    if (!isNotificationSupported) return;
     const result = await Notification.requestPermission();
     setPermission(result);
   };
@@ -297,9 +300,14 @@ export function CalendarBoard() {
           <button
             type="button"
             onClick={requestPermission}
+            disabled={!isNotificationSupported}
             className="rounded-full border border-slate-200/70 bg-white/70 px-3 py-1 text-[10px] font-semibold text-slate-500 transition hover:text-slate-900 dark:border-slate-700/60 dark:bg-slate-900/60 dark:text-slate-300"
           >
-            {permission === 'granted' ? 'Alertas activas' : 'Activar alertas'}
+            {!isNotificationSupported
+              ? 'Alertas no disponibles'
+              : permission === 'granted'
+                ? 'Alertas activas'
+                : 'Activar alertas'}
           </button>
           <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[10px] font-semibold text-emerald-700 dark:text-emerald-300">
             Local/offline OK
