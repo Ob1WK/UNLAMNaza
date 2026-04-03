@@ -3,6 +3,7 @@ import { CorrelativesMap } from '@/components/academics/correlatives-map';
 import { SummaryDashboard } from '@/components/academics/summary-dashboard';
 import { GoogleLoginButton } from '@/components/auth/google-login';
 import { CalendarBoard } from '@/components/calendar/calendar-board';
+import { GradesBoard } from '@/components/grades/grades-board';
 import { BottomNav, Sidebar } from '@/components/layout/navigation';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Card } from '@/components/ui/card';
@@ -103,15 +104,7 @@ export default function Home() {
 
             <section id="asistencias" className="grid gap-4 lg:grid-cols-[1fr_1.2fr]">
               <AttendanceCalculator />
-
-              <Card>
-                <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-400">
-                  Registro de notas
-                </p>
-                <div className="mt-3 rounded-2xl border border-dashed border-slate-200/70 bg-slate-50/70 p-4 text-xs text-slate-500 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400">
-                  Todavía no hay notas cargadas.
-                </div>
-              </Card>
+              <GradesBoard />
             </section>
 
             <section id="notas" className="grid gap-4 lg:grid-cols-3">
